@@ -1,39 +1,62 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import "../../style/styles.css";
-import firebase from '../../Firebase';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../FirebaseConfig';
+import '../../estilos/styles.css';
 
-class Cadastro extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            nome: '',
-            email: ''
-        };
+function Cadastro() {
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [nome, setNome] = useState('');
+    const [sobrenome, setSobrenome] = useState('');
+    const [dataNascimento, setDataNascimento] = useState('');
+    const [mensagem, setMensagem] = useState('');
+    const navigate = useNavigate();
 
-        this.gravar = this.gravar.bind(this);
-    }
+    const handleCadastro = async (e) => {
+        e.preventDefault();
+        setMensagem('');
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+            const user = userCredential.user;
+            await setDoc(doc(db, 'usuarios', user.uid), {
+                nome: nome,
+                sobrenome: sobrenome,
+                dataNascimento: dataNascimento,
+                email: email
+            });
+            alert('O cadastro foi realizado com sucesso!');
+            navigate('/');
+        } catch (error) {
+            console.error("Erro no cadastro:", error);
+            if (error.code === 'auth/email-already-in-use') {
+                setMensagem('Este e-mail já está em uso em um outro cadastro.');
+            } else if (error.code === 'auth/weak-password') {
+                setMensagem('A senha deve ter pelo menos 6 caracteres.');
+            } else {
+                setMensagem('Ocorreu um erro ao realizar o cadastro.');
+            }
+        }
+    };
 
-    gravar(){
-        firebase.firestore().collection('usuario').add({
-            nome: this.state.nome,
-            email: this.state.email
-    });
-}
-
-    render(){
-      return(
+    return (
         <div className="form-container">
-            <h1>Página de Cadastro</h1>
-            <input type="text" placeholder="Nome Completo" onChange={(e) => this.setState({nome: e.target.value})} />
-            <br/>
-            <input type="text" placeholder="Seu melhor e-mail" onChange={(e) => this.setState({email: e.target.value})} />
-            <br/>
-            <button onClick={this.gravar}>Gravar</button>
-            <Link to="/"><button>Página Inicial</button></Link>
+            <h1>Cadastro de Usuário</h1>
+            <form onSubmit={handleCadastro}>
+                <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <input type="password" placeholder="Senha (mínimo 6 caracteres)" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+                <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                <input type="text" placeholder="Sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} required />
+                <input type="date" placeholder="Data de Nascimento" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} required />
+                <button type="submit">Cadastrar</button>
+            </form>
+            {mensagem && <p className="mensagem-erro">{mensagem}</p>}
+            <p className="link-navegacao">
+                Já tem uma conta? <Link to="/">Faça login</Link>
+            </p>
         </div>
-      )
-    }
+    );
 }
 
 export default Cadastro;

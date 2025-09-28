@@ -1,10 +1,10 @@
 import React from 'react';
 import Rotas from './rotas';
-import './App.css'; // Você pode usar para estilização geral
+import './estilos/styles.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app-container">
       <Rotas />
     </div>
   );
