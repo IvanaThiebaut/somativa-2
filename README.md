@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+# Atividade Somativa 2 da disciplina: Tecnologias para desenvolvimento web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrição do projeto
+A aplicação é num sistema web completo que permite o registo, autenticação e gestão de usuarios. 
+O projeto foi construído utilizando React.js para o front-end e os serviços de Authentication e Firestore do Firebase para o back-end.
 
-## Available Scripts
+## Funcionalidades principais
 
-In the project directory, you can run:
+Página de cadastro: Permite que novos usuarios criem uma conta com os seus dados de nome, sobrenome, data de nascimento, e-mail e senha.
+Página de login: Permite que os usuários que estejam registados consigam acessar a aplicação.
+Gestão de sessão: A aplicação controla o estado de autenticação, protegendo rotas e dados.
+Gestão de dados do usuário: Os dados dos usuários são criados no Firebase Authentication e as informações adicionais são armazenadas numa coleção no Cloud Firestore.
+Página principal: Após o login, os dados do usuario (nome, sobrenome, data de nascimento) são exibidos na tela.
+Navegação: Utilização do React Router Dom para criar uma navegação entre as páginas usando as rotas.
 
-### `npm start`
+Eu também inclui uma página Sobre com detalhes do projeto e uma página NotFound para rotas inexistentes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tecnologias Utilizadas
+Front-End:
+React.js: Biblioteca principal para a construção da interface.
+React Router Dom: Para a gestão de rotas.
+CSS: Para a estilização da aplicação.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Back-End:
+Firebase authentication: Para o sistema de registo e login com e-mail e senha.
+Cloud firestore: Como banco de dados para armazenar os dados dos utilizadores.
