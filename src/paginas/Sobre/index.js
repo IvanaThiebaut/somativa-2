@@ -1,23 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import "../../style/styles.css";
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../../FirebaseConfig';
+import '../../estilos/styles.css';
 
 function Sobre() {
-  return (
-    <div>
-      <h1>Sobre a Aplicação</h1>
-      <p>Esta aplicação foi desenvolvida para aprender sobre rotas em React.</p>
-      <ul>
-        <li><b>Linguagem:</b> JavaScript</li>
-        <li><b>Biblioteca:</b> React</li>
-        <li><b>Framework de Rotas:</b> React Router Dom</li>
-        <li><b>Versão do React:</b> 18.x</li>
-      </ul>
-      <Link to="/">
-        <button>Voltar para Home</button>
-      </Link>
-    </div>
-  );
+    const navigate = useNavigate();
+
+    const isLoggedIn = auth.currentUser;
+
+    return (
+        <div className="container-geral">
+            <h1>Sobre o Projeto</h1>
+            <div className="user-data">
+                <p>Olá! Meu nome é Ivana Thiebaut e eu desenvolvi este trabalho para a Atividade Somativa 2 da disciplina de Tencnologias para Desenvolvimento Web.</p>
+                <p><strong>Tecnologias Utilizadas:</strong></p>
+                <ul>
+                    <li>React.js para a construção da interface e da aplicação.</li>
+                    <li>React Router Dom para a navegação entre páginas usando rotas.</li>
+                    <li>Firebase (Authentication e Firestore) para gerenciamento do usuários e dados.</li>
+                </ul>
+            </div>
+            {isLoggedIn ? (
+                <button onClick={() => navigate('/principal')}>Voltar para a Página Principal</button>
+            ) : (
+                <button onClick={() => navigate('/')}>Voltar para o Login</button>
+            )}
+        </div>
+    );
 }
 
 export default Sobre;
