@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react'; // Passo 1: Adicionar useCallback aqui
 import { useNavigate, Link } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../../FirebaseConfig';
+import { auth, db } from '../../FirebaseConfig'; // Atenção ao nome deste ficheiro
 import '../../estilos/styles.css';
 
 function Principal() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    // Passo 2: Envolver a sua função handleLogout com useCallback
+    const handleLogout = useCallback(async () => {
+        try {
+            await signOut(auth);
+            navigate('/');
+        } catch (error) {
+            console.error("Erro ao fazer logout:", error);
+        }
+    }, [navigate]); // navigate é a dependência do useCallback
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -26,19 +36,12 @@ function Principal() {
             setLoading(false);
         });
         return () => unsubscribe();
-    }, [navigate]);
+    // Passo 3: Adicionar handleLogout aqui na linha 29
+    }, [navigate, handleLogout]);
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            navigate('/');
-        } catch (error) {
-            console.error("Erro ao fazer logout:", error);
-        }
-    };
 
     if (loading) {
-        return <div className="container-geral"><h1>Carregando...</h1></div>;
+        return <div className="container-geral"><h1>A carregar...</h1></div>;
     }
 
     return (
@@ -62,3 +65,4 @@ function Principal() {
 }
 
 export default Principal;
+
